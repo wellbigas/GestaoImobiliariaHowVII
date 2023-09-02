@@ -1,16 +1,15 @@
-from manipularBancoDeDados import consultar_pagamento
+from manipularBancoDeDados import consultar_pagamento, consultar_estrutura_analogica
 from dbConection import get_db_connection
 
 def main():
     try:
         connection = get_db_connection()
-
         if connection is not None:
-            resultados = consultar_pagamento(connection)
+            resultados = consultar_estrutura_analogica(connection)
 
             if resultados is not None:
-                for pagamento in resultados:
-                    print(pagamento)
+                for estrutura_analogica in resultados:
+                    print(estrutura_analogica)
             else:
                 print("Nenhum resultado encontrado.")
         else:
