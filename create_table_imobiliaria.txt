@@ -1,0 +1,81 @@
+CREATE TABLE TipoImovel (
+    id_tipo_imovel INT PRIMARY KEY,
+    nome_tipo_imovel VARCHAR(255)
+);
+
+CREATE TABLE Imovel (
+    id_imovel INT PRIMARY KEY,
+    descricao_imovel VARCHAR(255),
+    tipo_imovel_id INT,
+    FOREIGN KEY (tipo_imovel_id) REFERENCES TipoImovel(id_tipo_imovel)
+);
+
+CREATE TABLE Pagamento (
+    id_pagamento INT PRIMARY KEY,
+    data_pagamento DATE,
+    valor_pagamento DECIMAL(10, 2),
+    codigo_imovel INT,
+    FOREIGN KEY (codigo_imovel) REFERENCES Imovel(id_imovel)
+);
+
+
+-- Inserir pagamento para o imóvel 1 em diferentes meses
+INSERT INTO Pagamento (data_pagamento, valor_pagamento, codigo_imovel)
+VALUES
+    ('2023-01-10', 1000.00, 1),
+    ('2023-02-10', 800.00, 1),
+    ('2023-03-10', 1200.00, 1),
+    ('2023-04-10', 900.00, 1),
+    ('2023-05-10', 1100.00, 1),
+    ('2023-06-10', 950.00, 1);
+
+-- Inserir pagamento para o imóvel 2 em diferentes meses
+INSERT INTO Pagamento (data_pagamento, valor_pagamento, codigo_imovel)
+VALUES
+    ('2023-02-15', 750.00, 2),
+    ('2023-03-15', 900.00, 2),
+    ('2023-04-15', 850.00, 2),
+    ('2023-05-15', 950.00, 2),
+    ('2023-06-15', 1100.00, 2),
+    ('2023-07-15', 1200.00, 2);
+
+-- Inserir pagamento para o imóvel 3 em diferentes meses
+INSERT INTO Pagamento (data_pagamento, valor_pagamento, codigo_imovel)
+VALUES
+    ('2023-03-20', 800.00, 3),
+    ('2023-04-20', 950.00, 3),
+    ('2023-05-20', 1100.00, 3),
+    ('2023-06-20', 1200.00, 3),
+    ('2023-07-20', 1300.00, 3),
+    ('2023-08-20', 1400.00, 3);
+
+-- Inserir outros pagamentos...
+
+
+
+
+
+INSERT INTO Imovel (id_imovel, descricao_imovel, tipo_imovel_id)
+VALUES
+    (1, 'Apartamento 100 m2 em condomínio fechado', 1),
+    (2, 'Terreno com vista para o mar', 2),
+    (3, 'Sala comercial no centro da cidade', 3),
+    (4, 'Casa espaçosa com piscina', 4),
+    (5, 'Apartamento mobiliado', 1),
+    (6, 'Terreno para investimento', 2),
+    (7, 'Sala comercial em edifício moderno', 3),
+    (8, 'Casa de campo com jardim', 4);
+
+SELECT
+    p.id_pagamento,
+    p.data_pagamento,
+    p.valor_pagamento,
+    i.codigo_imovel,
+    i.descricao_imovel,
+    ti.nome_tipo_imovel
+FROM
+    Pagamento p
+JOIN
+    Imovel i ON p.codigo_imovel = i.id_imovel
+JOIN
+    TipoImovel ti ON i.tipo_imovel_id = ti.id_tipo_imovel;
